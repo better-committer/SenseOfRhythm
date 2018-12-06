@@ -15,6 +15,7 @@ public class SenseOfRhythm extends JFrame {
     private Image screenImage;
     private Graphics screenGraphic;
 
+    private Image selectedImage = new ImageIcon(this.getClass().getResource("/images/playing/energy_start.jpg")).getImage();
     private Image background = new ImageIcon(this.getClass().getResource("/images/background/intro.jpg")).getImage();
     private JLabel menuBar = new JLabel(new ImageIcon(this.getClass().getResource("/images/interface/menuBar.png")));
 
@@ -38,6 +39,8 @@ public class SenseOfRhythm extends JFrame {
     private JButton leftButton = new JButton(leftButtonBasicImage);
 
     private int mouseX,mouseY;
+
+    private boolean isMainScreen = false;
 
     public SenseOfRhythm(){
         setUndecorated(true); // -> GUI 기본 메뉴바 제거
@@ -134,8 +137,10 @@ public class SenseOfRhythm extends JFrame {
                 //게임시작 이벤트
                 startButton.setVisible(false);
                 quitButton.setVisible(false);
+                rightButton.setVisible(true);
+                leftButton.setVisible(true);
                 background = new ImageIcon(this.getClass().getResource("/images/background/game_background.jpg")).getImage();
-
+                isMainScreen = true;
                 // 6강부터
                 // https://www.youtube.com/watch?v=v4MVn4Zb0IY&list=PLRx0vPvlEmdDySO3wDqMYGKMVH4Qa4QhR&index=6
             }
@@ -172,11 +177,11 @@ public class SenseOfRhythm extends JFrame {
     }
 
     public void addLeftButton(){
-        leftButton.setBounds(140, 310, 60, 60);
-        leftButton.setBorderPainted(false);
+        leftButton.setBounds(80, 310, 72, 72);
+        leftButton.setBorderPainted(true);
         leftButton.setContentAreaFilled(false);
         leftButton.setFocusPainted(false);
-
+        leftButton.setVisible(false);
         leftButton.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseEntered(MouseEvent e) {
@@ -191,8 +196,7 @@ public class SenseOfRhythm extends JFrame {
             }
             @Override
             public void mousePressed(MouseEvent e){
-                rightButton.setVisible(true);
-                leftButton.setVisible(true);
+
             }
         });
 
@@ -200,11 +204,11 @@ public class SenseOfRhythm extends JFrame {
     }
 
     public void addRightButton(){
-        rightButton.setBounds(40, 350, 400, 100);
-        rightButton.setBorderPainted(false);
+        rightButton.setBounds(1170, 310, 72, 72);
+        rightButton.setBorderPainted(true);
         rightButton.setContentAreaFilled(false);
         rightButton.setFocusPainted(false);
-
+        rightButton.setVisible(false);
         rightButton.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseEntered(MouseEvent e) {
@@ -236,8 +240,13 @@ public class SenseOfRhythm extends JFrame {
 
     public void screenDraw(Graphics g) {
         g.drawImage(background, 0, 0, null);
+        if(isMainScreen){
+            g.drawImage(selectedImage, 180, 100, null);
+        }
         paintComponents(g);
         this.repaint();
         repaint();
     }
 }
+
+//todo : 6강, 9분부터 포토샵 이미지 만들기
